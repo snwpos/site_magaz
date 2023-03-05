@@ -9,8 +9,16 @@ from django.views.generic import View
 from django.http.request import HttpRequest
 from django.utils.decorators import method_decorator
 from .decorators import *
+# from rest_framework import generics
+from .models import Cinema
+from myapp import models
+from myapp import forms
+# from .serializers import CinemaSerializer
 
 
+# class MyappAPIView(generics.ListAPIView):
+#     queryset = Cinema.objects.all()
+#     serializer_class = CinemaSerializer
 
 
 def index(request: HttpRequest) -> HttpRequest:
@@ -69,5 +77,15 @@ class CustomLogout(LogoutView):
     def get_success_url(self):
         return resolve_url('login')
 
+def add_new_clothes(request):
+    form = forms.NewClothesForm()
+    result = ""
 
+    if request.method == "POST":
+        form = forms.NewClothesForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            result = "Одежда успешно добавлена!"
+
+    return render(request, 'myapp/sellers/newclothes.html', context={'form': form, 'result': result})
 

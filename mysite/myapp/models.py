@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.base_user import BaseUserManager
 
 
-# Create your models here.
+
 class CustomUserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
@@ -43,8 +43,8 @@ class CityLocation(models.Model):
     name = models.CharField(("Товары"), max_length=128, unique=True)
 
     class Meta:
-        verbose_name = "Товары"
-        verbose_name_plural = 'Товары'
+        verbose_name = "Каталог"
+        verbose_name_plural = 'Каталог'
 
     def __str__(self) -> str:
         return self.name
@@ -58,8 +58,8 @@ class Cinema(models.Model):
     image = models.ImageField(upload_to='media', null=True, blank=True)
 
     class Meta:
-        verbose_name = "Каталог"
-        verbose_name_plural = "Каталог"
+        verbose_name = "Товар"
+        verbose_name_plural = "Товары"
 
     def __str__(self) -> str:
         return self.cinema
