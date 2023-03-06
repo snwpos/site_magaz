@@ -13,6 +13,7 @@ from .decorators import *
 from .models import Cinema
 from myapp import models
 from myapp import forms
+from django.contrib.auth.decorators import user_passes_test, login_required
 # from .serializers import CinemaSerializer
 
 
@@ -41,7 +42,7 @@ def basket(request):
 
 def sellerbas(request):
     print("sellerbas")
-    return render(request, 'myapp/sellerbas.html', {"title": "sellerbas"})
+    return render(request, 'myapp/sellers/sellerbas.html', {"title": "sellerbas"})
 
 def register(request):
     if request.method == 'POST':
@@ -77,6 +78,16 @@ class CustomLogout(LogoutView):
     def get_success_url(self):
         return resolve_url('login')
 
+def check_admin(user):
+    is_saler = False
+    print("FFFFFF:", dir(user))
+    if user.is_saler().name == 'Продавец':
+        is_saler = True
+
+    return is_saler
+
+@login_required
+@user_passes_test(check_admin)
 def add_new_clothes(request):
     form = forms.NewClothesForm()
     result = ""
@@ -88,4 +99,3 @@ def add_new_clothes(request):
             result = "Одежда успешно добавлена!"
 
     return render(request, 'myapp/sellers/newclothes.html', context={'form': form, 'result': result})
-
