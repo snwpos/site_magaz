@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+<h3>{{cloth.name}}</h3>
+
+<img class="img-cloth rounded" src="/main{{cloth.image.url}}" alt="">
+
+{% comment %} <p class="card-text">{{cloth.brand}}</p> {% endcomment %}
+<div class="d-flex justify-content-between">
+    <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;">
+        <a id="" data-book="{{cloth.id}}" class="addToCart" href="/myapp/cart/add/{{cloth.id}}">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+    </div>
+    <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;">
+        <a class="" href="#">
+            <i class="fas fa-heart"></i>
+        </a>
+    </div>
+{% comment %} <form action="{% url 'cart:cart_add' cloth.id %}" method="post">
+    {{ cart_product_form }}
+    {% csrf_token %}
+    <input type="submit" value="В корзину">
+</form> {% endcomment %}
+{% endblock content %}

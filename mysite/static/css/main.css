@@ -1,6 +1,15 @@
 body{
-    /* background-color: rgb(23, 50, 19); */
-    background: url(fon1.jpg) center;
+    background-color: rgb(127, 173, 121);
+    /* background: url(fon1.jpg) center; */
 }
+
+
+
+.img-cloth{
+    width: 500px;
+    height: 500px;
+    /* padding: 25px; */
+}
+
 
 

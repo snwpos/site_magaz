@@ -1,34 +1,70 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserRegistrationForm
-from .models import Cinema, CityLocation
-from django.shortcuts import resolve_url
+from . import models
+from .models import Cloth, Basket
 from django.views.generic import View
+from django.shortcuts import resolve_url
+from django.views.generic import ListView
 from django.http.request import HttpRequest
 from django.utils.decorators import method_decorator
 from .decorators import *
-# from rest_framework import generics
-from .models import Cinema
+from rest_framework import generics
 from myapp import models
 from myapp import forms
+from .forms import ClothFilterForm
 from django.contrib.auth.decorators import user_passes_test, login_required
-# from .serializers import CinemaSerializer
-
-
+from .serializers import ClothSerializer
+from . import filters
+from django.views.decorators.csrf import csrf_exempt
+from django_filters.rest_framework import DjangoFilterBackend
 # class MyappAPIView(generics.ListAPIView):
-#     queryset = Cinema.objects.all()
+#     queryset = Cloth.objects.all()
 #     serializer_class = CinemaSerializer
 
+# class MovieListView(generics.ListAPIView):
+#     """Вывод списка """
+#     serializer_class = ClothListSerializer
+#     filter_backends = (DjangoFilterBackend,)
+#     filterset_class = ClothFilter
+
+#     def get_queryset(self):
+#         movies = Cloth.objects.filter(draft=False).annotate(
+#             rating_user=models.Count("ratings",
+#                                      filter=models.Q(ratings__ip=get_client_ip(self.request)))
+#         ).annotate(
+#             middle_star=models.Sum(models.F('ratings__star')) / models.Count(models.F('ratings'))
+#         )
+#         return movies
+
+# class ClothDetailView(generics.RetrieveAPIView):
+#     """Вывод """
+#     queryset = Cloth.objects.filter(draft=False)
+#     serializer_class = ClothDetailSerializer
 
 def index(request: HttpRequest) -> HttpRequest:
-    """index view."""
+    print("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+    # search_query = request.GET.get('q', '')
 
+    # if search_query:
+    #     clothes = Cloth.objects.filter(name__icontains=search_query)
+    # else:
+    #     clothes = Cloth.objects.all()
+
+    name = request.GET.get('name')   
+    clothes = Cloth.objects.all()
+
+
+
+    if name:
+        clothes = Cloth.objects.filter(name__icontains=name)
     context  = {
-            'title': 'Заголовок - сайт',
-            'cinemas': Cinema.objects.all(),
-            'citys': CityLocation.objects.all(),
+        'form': ClothFilterForm(),
+        'title': 'Заголовок - сайт',
+        'clothes': clothes,
+        'brands': models.Brand.objects.all(),
     }
     return render(
         request,
@@ -36,9 +72,9 @@ def index(request: HttpRequest) -> HttpRequest:
         context=context
     )
 
-def basket(request):
-    print("basket")
-    return render(request, 'myapp/basket.html', {"title": "basket"})
+def news(request):
+    print("news")
+    return render(request, 'myapp/news.html', {"title": "news"})
 
 def sellerbas(request):
     print("sellerbas")
@@ -99,3 +135,68 @@ def add_new_clothes(request):
             result = "Одежда успешно добавлена!"
 
     return render(request, 'myapp/sellers/newclothes.html', context={'form': form, 'result': result})
+
+def get_all_clothes(request):
+    # request.session.pop("filter")
+    filter_parameters = request.GET
+
+    clothes = filters.ClothFilter(request.GET, queryset=Cloth.objects.all())
+
+    print("FFFFFFFFF: ", clothes.qs)
+    return render(request, 'myapp/sellers/sellerbas.html', {'filter': clothes, 'clothes': clothes.qs})
+
+class ClothDetailView(View):
+
+    def get(self, request, slug):
+        cloth = Cloth.objects.get(url=slug)
+
+        return render(request, 'myapp/cloth_detail.html', {"cloth": cloth})
+                                                        #    'cart_product_form': cart_product_form})
+# def ClothDetailView(request, slug):
+#     cloth = get_object_or_404(Cloth, slug=slug, available=True)
+#     return render(request, 'myapp/cloth_detail.html', {'cloth': cloth})
+
+def SearchCloth(request):
+    # request.session.pop("filter")
+    search_query = request.GET.get('search_query')
+
+    # clothes = models.Cloth.objects.filter(string__icontains='pattern')
+    clothes = models.Cloth.objects.filter(name__icontains=search_query)
+    if search_query:
+            clothes = models.Cloth.objects.filter(name__icontains=search_query)
+        
+    else:
+            return render(request, 'myapp/index.html')
+
+# class SearchClot(generics.ListAPIView):
+#     queryset = Cloth.objects.all()
+#     serializer_class = ClothSerializer
+#     filter_backends = [filters.SearchFilter]
+#     search_fields = ['name']
+
+def basket(request):
+    items = Basket.objects.filter(user=request.user).all()
+    form = forms.Basket()
+
+    return render(request, 'myapp/cart/cart_info.html', context={'form': form, 'items': items})
+
+
+@csrf_exempt
+def add_to_basket(request, id):
+    cloth =  Cloth.objects.get(id=id)
+    basket = Basket.objects.filter(user=request.user, cloth=cloth)
+    price = request.POST.get("price")
+
+    if not basket.exists():
+        Basket.objects.create(user = request.user, cloth=cloth, price=price, quantity_buying=1)
+    else:
+        basket=basket.first()
+        basket.quantity_buying += 1
+        basket.save()
+
+    return render(request, 'cart/add.html')
+
+def basket_remove(request, id):
+    basket = Basket.objects.get(id=id)
+    basket.delete()
+    return redirect("cart")

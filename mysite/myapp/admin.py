@@ -1,9 +1,12 @@
 from django.contrib import admin
-from .models import CustomUser, Cinema, CityLocation, Role
+from myapp import models
 
 
-
-admin.site.register(CustomUser)
-admin.site.register(Cinema)
-admin.site.register(CityLocation)
-admin.site.register(Role)
+admin.site.register(models.CustomUser)
+admin.site.register(models.Cloth)
+admin.site.register(models.Sise)
+admin.site.register(models.Type)
+admin.site.register(models.Brand)
+admin.site.register(models.Color)
+admin.site.register(models.Role)
+# admin.site.register(models.Basket)

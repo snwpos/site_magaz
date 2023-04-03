@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group, AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
-
+from rest_framework import serializers
 
 
 class CustomUserManager(BaseUserManager):
@@ -85,31 +85,109 @@ class CustomUser(AbstractUser):
 
 
 
-class CityLocation(models.Model):
+class Type(models.Model):
 
-    name = models.CharField(("Товары"), max_length=128, unique=True)
+    name = models.CharField(("Каталог"), max_length=128, unique=True)
 
     class Meta:
-        verbose_name = "Каталог"
-        verbose_name_plural = 'Каталог'
+        verbose_name = "Вид"
+        verbose_name_plural = 'Виды'
 
     def __str__(self) -> str:
         return self.name
     
-class Cinema(models.Model):
+class Brand(models.Model):
+    name = models.CharField('Название бренда', max_length=128, unique=True)
 
-    """Добавить описание кинотеатра и еще немного характеристик"""
-    cinema = models.CharField(max_length=128)
-    address = models.TextField()
-    city = models.ForeignKey(to=CityLocation, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='media', null=True, blank=True)
+    class Meta:
+        verbose_name = "Бренд"
+        verbose_name_plural = 'Бренды'
+
+    def __str__(self) -> str:
+        return self.name
+
+class Color(models.Model):
+    name = models.CharField('Цвет', max_length=128, unique=True)
+
+    class Meta:
+        verbose_name = "Цвет"
+        verbose_name_plural = 'Цвета'
+
+    def __str__(self) -> str:
+        return self.name
+
+class Sise(models.Model):
+    name = models.CharField('Размер', max_length=128, unique=True)
+
+    class Meta:
+        verbose_name = "Размер"
+        verbose_name_plural = 'Размеры'
+
+    def __str__(self) -> str:
+        return self.name
+
+class Cloth(models.Model):
+
+    """Добавить товар и описание товара"""
+    name = models.CharField("Название товара", max_length=128)
+    brand = models.ForeignKey(to=Brand, verbose_name="Бренд", on_delete=models.CASCADE)
+    type = models.ForeignKey(Type, verbose_name="Вид", on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, verbose_name="Цвет", on_delete=models.CASCADE)
+    price = models.FloatField('Цена')
+    isbn = models.CharField("Исбн товара", max_length=255)
+    image = models.ImageField("Изображение", upload_to='media', null=True, blank=True)
+    url = models.SlugField(max_length=160, unique=True)
 
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 
     def __str__(self) -> str:
-        return self.cinema
+        return self.name
+
+class Basket(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    cloth = models.ForeignKey(Cloth, on_delete=models.CASCADE)
+    price = models.FloatField('Цена')
+    quantity_buying = models.IntegerField('Общая цена')
+
+    class Meta:
+        verbose_name = "Корзина"
+        verbose_name_plural = "Корзины"
+
+    def __str__(self) -> str:
+        return self.name
+
+class Card(models.Model):
+    name = models.CharField("Банковская карта", max_length=255, unique=True )
+
+    class Meta:
+        verbose_name = "Карта"
+        verbose_name_plural = "Карты"
+
+    def __str__(self) -> str:
+        return self.name
+
+class Pay(models.Model):
+    name = models.CharField("Способ оплаты", max_length=255, unique=True )
+
+    class Meta:
+        verbose_name = "Способ оплаты"
+        verbose_name_plural = "Способы оплаты"
+
+    def __str__(self) -> str:
+        return self.name
+    
+class Buy(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    purchased_books = models.ManyToManyField(to=Cloth)
+    date = models.SmallIntegerField("Дата покупки")
+    total_price = models.FloatField()
+    quantity_buying = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    pay = models.ForeignKey(Pay, on_delete=models.CASCADE)
+
+
 
 
 

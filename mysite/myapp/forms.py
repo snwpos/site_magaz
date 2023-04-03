@@ -29,5 +29,23 @@ class UserRegistrationForm(UserCreationForm):
 
 class NewClothesForm(forms.ModelForm):
     class Meta:
-        model = models.Cinema
+        model = models.Cloth
         fields = '__all__'
+    
+
+class ClothFilterForm(forms.Form):
+    name = forms.CharField()
+
+class Basket(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(Basket, self).__init__(*args, **kwargs)
+        self.fields['cloth'].required = False
+        self.fields['user'].required = False
+        self.fields['quantity_buying'].required = False
+        self.fields['price'].required = False
+
+    class Meta:
+        model = models.Basket
+        fields = "__all__"
+
+    
