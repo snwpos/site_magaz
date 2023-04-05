@@ -3,7 +3,7 @@ $(document).ready(()=>{
         event.preventDefault();
         
         // var bookID = event.target.attributes['data-book'].id;
-        var clothID = event.currentTarget.attributes['data-cloth'].value;
+        var clothID = event.currentTarget.attributes['data-cloth'].id;
         var price = $(`#price${clothID}`).text().replace(',', '.');
         var url = `/main/cart/add/${clothID}`;
         $.ajax({

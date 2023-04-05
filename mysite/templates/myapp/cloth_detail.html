@@ -10,15 +10,15 @@
 {% comment %} <p class="card-text">{{cloth.brand}}</p> {% endcomment %}
 <div class="d-flex justify-content-between">
     <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;">
-        <a id="" data-book="{{cloth.id}}" class="addToCart" href="/myapp/cart/add/{{cloth.id}}">
+        <a id="" data-cloth="{{cloth.id}}" class="addToCart" href="/main/cart/add/{{cloth.id}}">
             <i class="fas fa-shopping-cart"></i>
         </a>
     </div>
-    <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;">
+    {% comment %} <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;">
         <a class="" href="#">
             <i class="fas fa-heart"></i>
         </a>
-    </div>
+    </div> {% endcomment %}
 {% comment %} <form action="{% url 'cart:cart_add' cloth.id %}" method="post">
     {{ cart_product_form }}
     {% csrf_token %}
