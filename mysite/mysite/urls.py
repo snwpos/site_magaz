@@ -7,4 +7,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api/v1/myapplist', MyappAPIView.as_view()),
     path('main/', include('myapp.urls')),
+    path('api/', include('myapp.urls_api')),
+
 ]

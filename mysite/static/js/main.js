@@ -2,10 +2,9 @@ $(document).ready(()=>{
     $(".addToCart").click((event)=>{
         event.preventDefault();
         
-        // var bookID = event.target.attributes['data-book'].id;
-        var clothID = event.currentTarget.attributes['data-cloth'].id;
+        var clothID = event.currentTarget.attributes['data-cloth'].value;
         var price = $(`#price${clothID}`).text().replace(',', '.');
-        var url = `/main/cart/add/${clothID}`;
+        var url = `http://127.0.0.1:8000/main/cart/add/${clothID}`;
         $.ajax({
             
             url: url,

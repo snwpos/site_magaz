@@ -1,20 +1,19 @@
-
 from rest_framework import serializers
-from django.contrib.auth.models import User
-from .models import CustomUser, Cloth
-from rest_framework.authtoken.models import Token
-from rest_framework.validators import UniqueTogetherValidator
+from . import models
 
 
 class PublisherSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
+        model = models.CustomUser
         fields = 'all'
 
 class ClothSerializer(serializers.ModelSerializer):
+    # cloth = serializers.CharField()
+
     class Meta:
-        model = Cloth
-        fields = 'all'
+        model = models.Cloth
+        fields = "__all__"
+        
 # class ClothListSerializer(serializers.ModelSerializer):
 #     """Список фильмов"""
 #     rating_user = serializers.BooleanField()

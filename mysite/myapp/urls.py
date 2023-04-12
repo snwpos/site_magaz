@@ -17,6 +17,7 @@ urlpatterns = [
     # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), 
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
     path('api/publishers', PublisherView.as_view(), name='publisher_api'),
 
     path('index', views.index, name='index'),

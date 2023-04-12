@@ -157,6 +157,10 @@ class Basket(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    def sum(self):
+        print("FFFFFFFFF:   ", self.price, self.quantity_buying)
+        return self.price * self.quantity_buying
 
 class Card(models.Model):
     name = models.CharField("Банковская карта", max_length=255, unique=True )
@@ -180,7 +184,7 @@ class Pay(models.Model):
     
 class Buy(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    purchased_books = models.ManyToManyField(to=Cloth)
+    purchased_clothes = models.ManyToManyField(to=Cloth)
     date = models.SmallIntegerField("Дата покупки")
     total_price = models.FloatField()
     quantity_buying = models.ForeignKey(Basket, on_delete=models.CASCADE)

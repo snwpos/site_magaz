@@ -150,7 +150,9 @@ class ClothDetailView(View):
     def get(self, request, slug):
         cloth = Cloth.objects.get(url=slug)
 
-        return render(request, 'myapp/cloth_detail.html', {"cloth": cloth})
+        cloth_id = slug
+
+        return render(request, 'myapp/cloth_detail.html', {"cloth": cloth, 'cloth_id': cloth_id})
                                                         #    'cart_product_form': cart_product_form})
 # def ClothDetailView(request, slug):
 #     cloth = get_object_or_404(Cloth, slug=slug, available=True)
@@ -183,9 +185,11 @@ def basket(request):
 
 @csrf_exempt
 def add_to_basket(request, id):
-    cloth =  Cloth.objects.get(id=id)
+    cloth =  Cloth.objects.get(url=id)
+    print(cloth)
     basket = Basket.objects.filter(user=request.user, cloth=cloth)
-    price = request.POST.get("price")
+    price = cloth.price
+    print("fsdfsefsefsefsefsefsefsefsef", price)
 
     if not basket.exists():
         Basket.objects.create(user = request.user, cloth=cloth, price=price, quantity_buying=1)
@@ -194,9 +198,9 @@ def add_to_basket(request, id):
         basket.quantity_buying += 1
         basket.save()
 
-    return render(request, 'cart/add.html')
+    return render(request, 'myapp/cart/add.html')
 
 def basket_remove(request, id):
     basket = Basket.objects.get(id=id)
     basket.delete()
-    return redirect("cart")
+    return redirect('cart_info')
