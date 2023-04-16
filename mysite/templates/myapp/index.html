@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+
+{% comment %} {% include "layout.html" %} {% endcomment %}
+
+{% block content %}
+
+{% comment %} <div class="container">
+  <div class="display-6 text-black">Товары:
+    <form method ="GET" action="{% url 'index' %}">
+      {{form.as_p}}
+      <input type="submit" value="Поиск" class="btn btn-outline-dark btn-primary" />
+      
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Name</th> 
+          <th>Brand</th> 
+          <th>Type</th> 
+          <th>Price</th>     
+        </tr>
+        </thead>    
+       <tbody>
+        {% for cloth in clothes %}
+            <tr>
+              <td>{{ cloth.name }}</td>
+              <td>{{ cloth.brand.name }}</td>
+              <td>{{ cloth.type.name }}</td>
+              <td>{{ cloth.price }}</td>
+        {% endfor %}
+       </tbody>
+      </table>  {% endcomment %}
+
+<div class="container">
+    <div class="col-lg-9">
+      <div class="row">
+        {% for cloth in clothes %}
+        <div class="col-lg-4 col-md-4 mb-4">
+          <div class="card h-100">
+            <a href="#">
+                <img class="card-img-top"
+                     src="/main{{cloth.image.url}}"
+                     alt="">
+            </a>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
+                </h4>
+                <h5>{{cinema.city}}</h5>
+                <p class="card-text">{{cloth.brand}}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>  
+</div>
+
+
+{% endblock content %}
+
