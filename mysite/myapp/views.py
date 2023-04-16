@@ -151,10 +151,7 @@ class ClothDetailView(View):
         cloth = Cloth.objects.get(url=slug)
 
         return render(request, 'myapp/cloth_detail.html', {"cloth": cloth})
-                                                        #    'cart_product_form': cart_product_form})
-# def ClothDetailView(request, slug):
-#     cloth = get_object_or_404(Cloth, slug=slug, available=True)
-#     return render(request, 'myapp/cloth_detail.html', {'cloth': cloth})
+                                                      
 
 def SearchCloth(request):
     # request.session.pop("filter")

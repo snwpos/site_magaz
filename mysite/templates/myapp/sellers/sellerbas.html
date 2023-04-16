@@ -4,38 +4,36 @@
         <form method="GET">
             {{filter.form.as_p }}
             <button type="submit" class="btn btn-info btn-outline-success">Применить</button>
-        
-            {% comment %} <input type="hidden" name="filter" value="1"> {% endcomment %}
-            {% comment %} <label>Цена</label>
-            <input type="number" class="form-control" name="priceFrom">
-            <input type="number" class="form-control" name="priceTo">
-            <input type="text" class="form-control" name="genre" placeholder="Жанр"> {% endcomment %}
-            {% comment %} {{ books.form.as_p }} {% endcomment %}
         </form>
     </div>
-    <div class="col-8">
+    <div class="container mt-5">
         <div class="row">
-            {% for cloth in clothes %}
-                <div class="col-12 col-sm-6 col-md-4 my-2">
-                    <div class="card">
-                        <img class="card-img-top img-fluid w-75" src="/main{{cloth.image.url}}" alt="Card image cap">
-                        <div class="card-title">
-                            <h5 class="card-title" style="text-align:center" >
-                                <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
-                            </h5>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">{{cloth.brand}}</li>
-                            <li class="list-group-item">{{cloth.type}}</li>
-                            <li class="list-group-item">{{cloth.price}}</li>
-                        </ul>
-                        {% comment %} <div class="card-body">
-                            <a href="#" class="btn btn-primary card-link">Добавить в корзину</a>
-                            <a href="#" class="btn btn-info card-link">Избранное</a>
-                        </div> {% endcomment %}
-                    </div>
+          {% for cloth in clothes %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+              <div class="product">
+                <div class="image">
+                  <img src="/main{{cloth.image.url}}" alt="" class="img-fluid">
                 </div>
-            {% endfor %}
-        <div>
-    <div>
+                <div class="info">
+                  <h4 class="card-title">
+                    <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
+                  </h4>
+                  <ul class="rating">
+                    <li><ion-icon name="heart"></ion-icon></li>
+                    <li><ion-icon name="heart"></ion-icon></li>
+                    <li><ion-icon name="heart"></ion-icon></li>
+                    <li><ion-icon name="heart"></ion-icon></li>
+                    <li><ion-icon name="heart-half-outline"></ion-icon></li>
+                  </ul>
+                  <div class="info-price">
+                    <span class="price">{{cloth.price}}</span>
+                    <button class="add-to-cart"><ion-icon name="cart-outline"></ion-icon></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+      
 {% endblock content %}

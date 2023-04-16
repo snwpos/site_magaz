@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, GenericAPIView
-from .serializers import  PublisherSerializer
+from .serializers import  ClothSerializer, PublisherSerializer
 from rest_framework.generics import ListAPIView
 
 from rest_framework import generics
@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.permissions import IsAdminUser
 from rest_framework import status
-from .models import CustomUser
+from .models import Cloth, CustomUser
 from rest_framework.permissions import IsAuthenticated
 # class ServicesListView(ListAPIView):
 #     model = 
@@ -29,6 +29,10 @@ from rest_framework.permissions import IsAuthenticated
 #             "user": CustomUserSerializer(user, context=self.get_serializer_context()).data,
 #             "token": Token.objects.create(user=user).key
 #         })
+class ClothesList(ListAPIView):
+    serializer_class = ClothSerializer
+    queryset = Cloth.objects.all()
+    print(queryset)
 
 class PublisherView(ListAPIView):
     serializer_class = PublisherSerializer

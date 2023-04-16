@@ -20,7 +20,7 @@ $(document).ready(()=>{
             },
             success: () => {
                 
-                alert("Товар добавлен в корзину")
+                alert("Работает")
             },
             error: () => {
                 
@@ -29,6 +29,6 @@ $(document).ready(()=>{
         })
 
 
-        
+        // alert("");
     });
 })

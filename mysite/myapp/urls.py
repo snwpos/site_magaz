@@ -17,6 +17,7 @@ urlpatterns = [
     # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), 
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
     path('api/publishers', PublisherView.as_view(), name='publisher_api'),
 
     path('index', views.index, name='index'),
@@ -24,7 +25,7 @@ urlpatterns = [
     path('news/', views.news, name='news'),
     path('sellerbas/', views.get_all_clothes, name='sellerbas'),
     path('cart/', views.basket, name='cart_info'),
-    path('cart/add/<int:id>', views.add_to_basket, name='cart_add' ),
+    path('cart/add/<int:id>/', views.add_to_basket, name='add_to_cart'),
     path('cart/remove/<int:id>', views.basket_remove, name='cart_remove'),
     
     path('newclothes/', views.add_new_clothes, name='new_cloth'),
@@ -33,6 +34,7 @@ urlpatterns = [
     path('login/', views.CustomLogin.as_view(), name='login'),
     path('logout/', views.CustomLogout.as_view(), name='logout'),
     path('<slug:slug>/', views.ClothDetailView.as_view(), name="cloth_detail"),
+    
     path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
 
     path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

@@ -1,21 +1,68 @@
-{% extends 'layout.html' %} 
- 
-{% block content %} 
- 
-<div class="d-flex justify-content-between"> 
-    <h3>{{cloth.name}}</h3> 
-    <img class="img-cloth rounded" src="/main{{cloth.image.url}}" alt=""> 
-    <p class="card-text">{{cloth.brand}}</p> 
-    <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;"> 
-        <a id="" data-cloth="{{cloth_id}}" class="addToCart" href="/main/cart/add/{{cloth.id}}"> 
-            <i class="fas fa-shopping-cart"></i> 
-        </a> 
-    </div> 
-    {% comment %} <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;"> 
-        <a class="" href="#"> 
-            <i class="fas fa-heart"></i> 
-        </a> 
-    </div>  {% endcomment %} 
-</div> 
-    <script src="/static/js/main.js"></script> 
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="container">
+        <div class="col-md-4 single-right-left ">
+            <div class="d-flex justify-content-between">
+                <img class="img-detail-cloth rounded" src="/main{{cloth.image.url}}" alt="">
+            </div>
+            <div class="col-md-8 single-right-left simpleCart_shelfItem">
+                    <h3>{{cloth.name}}</h3>
+                    <p><span class="item_price">{{cloth.price}} тг.</p>
+                        <!-- <div class="rating1">
+                            <span class="starRating">
+                                <input id="rating5" type="radio" name="rating" value="5">
+                                <label for="rating5">5</label>
+                                <input id="rating4" type="radio" name="rating" value="4">
+                                <label for="rating4">4</label>
+                                <input id="rating3" type="radio" name="rating" value="3" checked="">
+                                <label for="rating3">3</label>
+                                <input id="rating2" type="radio" name="rating" value="2">
+                                <label for="rating2">2</label>
+                                <input id="rating1" type="radio" name="rating" value="1">
+                                <label for="rating1">1</label>
+                            </span>
+                        </div> -->
+                    <div class="color-quality">
+                        <div class="color-quality-right">
+                            <h5>Размер:</h5>
+                            <select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
+                                <option value="null">XS</option>
+                                <option value="null">S</option> 
+                                <option value="null">M</option>					
+                                <option value="null">L</option>								
+                            </select>
+                        </div>
+                    </div>
+                    <div class="occasion-cart">
+                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
+                                <form action="#" method="post">
+                                    <fieldset>
+                                        <input type="hidden" name="cmd" value="_cart">
+                                        <input type="hidden" name="add" value="1">
+                                        <input type="hidden" name="business" value=" ">
+                                        <input type="hidden" name="item_name" value="Wing Sneakers">
+                                        <input type="hidden" name="amount" value="650.00">
+                                        <input type="hidden" name="discount_amount" value="1.00">
+                                        <input type="hidden" name="currency_code" value="USD">
+                                        <input type="hidden" name="return" value=" ">
+                                        <input type="hidden" name="cancel_return" value=" ">
+                                        <input type="submit" name="submit" value="Add to cart" class="button">
+                                    </fieldset>
+                                </form>
+                        </div>  
+                        <div class="detail-cart">
+                            <a id="" data-cloth="{{cloth_id}}" class="addToCart" href="/main/cart/add/{{cloth.id}}">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </div> 
+                    </div>                                                 
+            </div>          
+        </div>                
+    </div>
+</div>                    
+    <script src="/static/js/main.js"></script>
 {% endblock content %}
+
+
