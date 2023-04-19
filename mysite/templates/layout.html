@@ -19,6 +19,9 @@
         <a class="nav-link" href="{% url 'sellerbas' %}">Каталог</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'favorite' %}">Избранное</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'cart_info' %}">Корзина</a>
       </li>
       {% if request.user.groups.all.0.name == 'Продавец'%}

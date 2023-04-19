@@ -48,4 +48,12 @@ class Basket(forms.ModelForm):
         model = models.Basket
         fields = "__all__"
 
-    
+class Favorite(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(Favorite, self).__init__(*args, **kwargs)
+        self.fields['cloth'].required = False
+        self.fields['user'].required = False
+
+    class Meta:
+        model = models.Favorite
+        fields = "__all__"

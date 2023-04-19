@@ -28,6 +28,10 @@ urlpatterns = [
     path('cart/add/<int:id>', views.add_to_basket, name='cart_add' ),
     path('cart/remove/<int:id>', views.basket_remove, name='cart_remove'),
     
+    path('fav/', views.favorite, name='favorite'),
+    path('favorite/ad/<int:id>', views.add_favorite_cloth, name='favorite_add' ),
+    path('favorite/remove/<int:id>', views.favorite_remove, name='favorite_remove'),
+
     path('newclothes/', views.add_new_clothes, name='new_cloth'),
     
 

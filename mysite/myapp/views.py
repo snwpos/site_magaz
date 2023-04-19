@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserRegistrationForm
 from . import models
-from .models import Cloth, Basket
+from .models import Cloth, Basket, Favorite
 from django.views.generic import View
 from django.shortcuts import resolve_url
+from django.http import JsonResponse
 from django.views.generic import ListView
 from django.http.request import HttpRequest
 from django.utils.decorators import method_decorator
@@ -204,3 +205,30 @@ def basket_remove(request, id):
     basket = Basket.objects.get(id=id)
     basket.delete()
     return redirect('cart_info')
+
+def favorite(request):
+    items = Favorite.objects.all()
+    form = forms.Favorite()
+    return render(request, 'myapp/favorite/fav.html', context={'form': form, 'items': items})
+
+@csrf_exempt
+def add_favorite_cloth(request, id):
+    
+    cloth =  Cloth.objects.get(url=id)
+    favorite = Favorite.objects.filter(user=request.user, cloth=cloth)
+    print("DDDDD: ", favorite)
+
+    if not favorite.exists():
+        Favorite.objects.create(user = request.user, cloth=cloth)
+        
+    else:
+        favorite = favorite.first()
+        favorite.save()
+        
+
+    return render(request, 'myapp/favorite/ad.html')
+
+def favorite_remove(request, id):
+    favorite = Favorite.objects.get(id=id)
+    favorite.delete()
+    return redirect("favorite")
