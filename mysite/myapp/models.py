@@ -162,6 +162,17 @@ class Basket(models.Model):
         print("FFFFFFFFF:   ", self.price, self.quantity_buying)
         return self.price * self.quantity_buying
 
+class Favorite(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    cloth = models.ForeignKey(Cloth, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Избранное"
+        verbose_name_plural = "Израбнные"
+
+    def __str__(self) -> str:
+        return self.user.username
+
 class Card(models.Model):
     name = models.CharField("Банковская карта", max_length=255, unique=True )
 

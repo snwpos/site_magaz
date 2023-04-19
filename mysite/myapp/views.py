@@ -4,11 +4,12 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserRegistrationForm
 from . import models
-from .models import Cloth, Basket
+from .models import Cloth, Basket, Favorite
 from django.views.generic import View
 from django.shortcuts import resolve_url
 from django.views.generic import ListView
 from django.http.request import HttpRequest
+from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from .decorators import *
 from rest_framework import generics
@@ -180,10 +181,11 @@ def basket(request):
 
 @csrf_exempt
 def add_to_basket(request, id):
-    cloth =  Cloth.objects.get(url=id)
+    cloth =  Cloth.objects.get(id=id)
     print(cloth)
     basket = Basket.objects.filter(user=request.user, cloth=cloth)
-    price = cloth.price
+    # price = cloth.price
+    price = request.POST.get("price")
     print("fsdfsefsefsefsefsefsefsefsef", price)
 
     if not basket.exists():
@@ -199,3 +201,31 @@ def basket_remove(request, id):
     basket = Basket.objects.get(id=id)
     basket.delete()
     return redirect('cart_info')
+
+
+def favorite(request):
+    items = Favorite.objects.all()
+    form = forms.Favorite()
+    return render(request, 'myapp/cart/favorite.html', context={'form': form, 'items': items})
+
+@csrf_exempt
+def add_favorite_cloth(request, id):
+    success = False
+    cloth =  Cloth.objects.get(url=id)
+    favorite = Favorite.objects.filter(user=request.user, cloth=cloth)
+    print("DDDDD: ", favorite)
+
+    if not favorite.exists():
+        Favorite.objects.create(user = request.user, cloth=cloth)
+        success = True
+    else:
+        favorite = favorite.first()
+        favorite.save()
+        success = True
+
+    return JsonResponse({'success': success})
+
+def favorite_remove(request, id):
+    favorite = Favorite.objects.get(id=id)
+    favorite.delete()
+    return redirect("favorite")

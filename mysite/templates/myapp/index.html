@@ -81,16 +81,21 @@
             <h4 class="card-title">
               <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
             </h4>
-            <ul class="rating">
-              <li><ion-icon name="heart"></ion-icon></li>
-              <li><ion-icon name="heart"></ion-icon></li>
-              <li><ion-icon name="heart"></ion-icon></li>
-              <li><ion-icon name="heart"></ion-icon></li>
-              <li><ion-icon name="heart-half-outline"></ion-icon></li>
-            </ul>
+ 
             <div class="info-price">
-              <span class="price">{{cloth.price}}</span>
-              <button class="add-to-cart"><ion-icon name="cart-outline"></ion-icon></button>
+              <li class="price" id="price{{cloth.id}}">{{cloth.price}}</li>
+
+              <form action="" method="post">
+                {% csrf_token %}
+                <button id='' class='addToCart' data-cloth="{{cloth.id}}">
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </form>
+              
+
+      
+              <!-- <button class="favorite"><ion-icon name="heart-outline"></ion-icon></ion-icon></button>
+              <button class="add-to-cart"><ion-icon name="cart-outline"></ion-icon></button> -->
             </div>
           </div>
         </div>
@@ -98,6 +103,7 @@
     {% endfor %}
   </div>
 </div>
-
+<script type="text/javascript">     window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+<script src="/static/js/main.js"></script>
 
 {% endblock content %}
