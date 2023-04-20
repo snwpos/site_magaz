@@ -35,7 +35,7 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {},
-              child: Text('Edit Profile'),
+              child: Text('ВЫЙТИ'),
             ),
           ],
         ),
