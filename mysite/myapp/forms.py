@@ -57,3 +57,8 @@ class Favorite(forms.ModelForm):
     class Meta:
         model = models.Favorite
         fields = "__all__"
+
+class Order(forms.ModelForm):
+    class Meta:
+        model = models.Buy
+        fields = '__all__'

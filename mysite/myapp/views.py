@@ -15,7 +15,7 @@ from .decorators import *
 from rest_framework import generics
 from myapp import models
 from myapp import forms
-from .forms import ClothFilterForm
+from .forms import ClothFilterForm, Order
 from django.contrib.auth.decorators import user_passes_test, login_required
 from .serializers import ClothSerializer
 from . import filters
@@ -232,3 +232,15 @@ def favorite_remove(request, id):
     favorite = Favorite.objects.get(id=id)
     favorite.delete()
     return redirect("favorite")
+
+
+def order_cloth(request):
+    form = forms.Order()
+    result = ""
+
+    if request.method == "POST":
+        form = forms.Order(request.POST, request.FILES)
+    if form.is_valid():
+            form.save()
+            result = "Заказ успешно оформлен!"
+    return render(request, 'myapp/cart/order.html', {'form': form, 'result': result})

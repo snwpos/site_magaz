@@ -4,7 +4,71 @@
 {% comment %} {% include "layout.html" %} {% endcomment %}
 
 {% block content %}
-
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="container">
+          <div class="row p-5">
+              <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                  <img class="img-fluid" src="media/img/banner1.png" alt="First">
+              </div>
+              <div class="col-lg-6 mb-0 d-flex align-items-center">
+                  <div class="text-align-left align-self-center">
+                      <h1 class="h1 text-success">MAGAZ</h1>
+                      <h3 class="h2">Только ЛУЧШИЕ товары</h3>
+                     
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="container">
+          <div class="row p-5">
+              <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                  <img class="img-fluid" src="media/img/banner2.png" alt="Second">
+              </div>
+              <div class="col-lg-6 mb-0 d-flex align-items-center">
+                  <div class="text-align-left">
+                      <h1 class="h1 text-success">СКИДКИ на Верхнюю одежду</h1>
+                      <h3 class="h2">Успейте купить</h3>
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="container">
+          <div class="row p-5">
+              <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                  <img class="img-fluid" src="mysite/media/img/banner3.png" alt="Third">
+              </div>
+              <div class="col-lg-6 mb-0 d-flex align-items-center">
+                  <div class="text-align-left">
+                      <h1 class="h1 text-success">Магазин одежды</h1>
+                      <h3 class="h2">Покупайте у нас</h3>
+                     
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>  
 {% comment %} <div class="container">
   <div class="display-6 text-black">Товары:
     <form method ="GET" action="{% url 'index' %}">
