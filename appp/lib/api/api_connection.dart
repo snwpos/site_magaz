@@ -12,12 +12,36 @@ import '../services/storage_service.dart';
 import 'package:appp/api/api_model.dart';
 
 final _base = "http://192.168.0.107:8000";
-final _signInURL = "/myapp/api/token/";
-final _sessionEndpoint = "/api/token/refresh/";
+final _signInURL = "/main/token/";
+final _refresh = "/main/token/refresh/";
 final _registrationEndpoint = "/api/registration/";
+final _clothesAll = "/main/api/clothes/";
 
 final _login = _base + _signInURL;
+final _clothAll = _base + _clothesAll;
 final _registration = _base + _registrationEndpoint;
+
+Future<void> refreshToken() async {
+  var token = await SecureStorage().getRefreshToken();
+  if (token != null) {
+    token = token;
+  }
+  Map<String, String> refreshTokenMap = {'refresh': '${token}'};
+  http.Response response = await http.post(
+    Uri.parse(_refresh),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(refreshTokenMap),
+  );
+  SecureStorage storage = SecureStorage();
+  if (response.statusCode == 200) {
+    Token token = Token.fromJson(json.decode(response.body));
+    storage.addTokenToDb(token.token, token.refreshToken);
+  } else {
+    throw Exception(json.decode(response.body));
+  }
+}
 
 Future<void> loginApi(User user) async {
   print("fgf[gdfgrefdswscv ggggggggg: ${user.toJson(user)}");
@@ -50,20 +74,44 @@ Future<List> registrationApi(UserRegistration userRegistration) async {
   return result;
 }
 
-Future<List<dynamic>> booksApi() async {
-  var asd = await SecureStorage().getUsername();
-  String url = 'http://192.168.254.88:8000/api/books/';
-  if (asd != null) {
-    url = url + '?username=' + asd;
-    print('wvgwrew');
+// Future<List<dynamic>> clothesApi() async {
+//   var asd = await SecureStorage().getUsername();
+//   String url = 'http://192.168.254.88:8000/api/clothes/';
+//   if (asd != null) {
+//     url = url + '?username=' + asd;
+//     print('wvgwrew');
+//   }
+//   http.Response response = await http.get(
+//     Uri.parse(url),
+//     headers: <String, String>{
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     },
+//   );
+
+//   List<dynamic> result = json.decode(utf8.decode(response.bodyBytes));
+//   return result;
+// }
+Future<List<dynamic>> clothesListApi() async {
+  print('ddddddddddddddddddddddddddddddddd ');
+  var token = await SecureStorage().getToken();
+  if (token != null) {
+    token = 'Bearer ${token}';
   }
   http.Response response = await http.get(
-    Uri.parse(url),
+    Uri.parse(_clothAll),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': '${token}',
     },
   );
-
+  if (response.statusCode == 401) {
+    refreshToken();
+    await Future.delayed(const Duration(seconds: 1));
+    return clothesListApi();
+  }
+  print(token);
   List<dynamic> result = json.decode(utf8.decode(response.bodyBytes));
+  print(result);
+  print('ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
   return result;
 }

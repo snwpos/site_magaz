@@ -36,22 +36,36 @@ class HomeController {
     return reply;
   }
 
-  Future<List<Books>> getBooks() async {
-    List<Books> allBooks = [];
-    print(allBooks);
-    // List<dynamic> result = await booksApi();
-    List<dynamic> result = [];
-    print('evabwbw ${result}');
+//   Future<List<Clothes>> getClothes() async {
+//     List<Clothes> allClothes = [];
+//     print(allClothes);
+
+//     List<dynamic> result = [];
+//     print('evabwbw ${result}');
+//     result.forEach((element) {
+//       allClothes.add(Clothes(
+//           name: element['name'],
+//           brand: element['brand'],
+//           type: element['type'],
+//           color: element['color'],
+//           price: element['price'],
+//           isbn: element['isbn'],
+//           img: element['img']));
+//     });
+//     return allClothes;
+//   }
+// }
+
+  Future<List<Clothes>> getClothes() async {
+    List<Clothes> allClothes = [];
+    List<dynamic> result = await clothesListApi();
+    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    print(result);
     result.forEach((element) {
-      allBooks.add(Books(
-          name: element['name'],
-          brand: element['brand'],
-          type: element['type'],
-          color: element['color'],
-          price: element['price'],
-          isbn: element['isbn'],
-          img: element['img']));
+      allClothes.add(Clothes.fromJson(element));
+      print('Работай даваааааааааааааааааааааааааааай');
     });
-    return allBooks;
+
+    return allClothes;
   }
 }

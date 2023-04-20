@@ -113,8 +113,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               child: TextButton(
                 onPressed: () {
-                  //   Navigator.push(context,
-                  //       MaterialPageRoute(builder: (context) => BooksPage()));
+                  
                 },
                 child: Text(
                   'Нет аккаунта? Зарегистрироваться',

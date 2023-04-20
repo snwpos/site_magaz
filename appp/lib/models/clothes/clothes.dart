@@ -2,7 +2,7 @@ import 'package:appp/models/clothes/brand.dart';
 import 'package:appp/models/clothes/type.dart';
 import 'package:appp/models/clothes/color.dart';
 
-class Books {
+class Clothes {
   String name;
   Brand brand;
   Type type;
@@ -11,7 +11,7 @@ class Books {
   int isbn;
   String img;
   // Url url;
-  Books(
+  Clothes(
       {required this.name,
       required this.brand,
       required this.type,
@@ -22,15 +22,20 @@ class Books {
       // required this.url
       });
 
-  factory Books.fromJson(Map<String, dynamic> json) {
+  factory Clothes.fromJson(Map<String, dynamic> json) {
+    
+    Brand brand = Brand.fromJson(json['brand']);
+    Type type = Type.fromJson(json['type']);
+    Color color = Color.fromJson(json['color']);
+    
     if (json['name'] == '') {
       json['name'] = 'Товар отсуствует';
     }
-    return Books(
+    return Clothes(
         name: json['name'],
-        brand: json['brand'],
-        type: json['type'],
-        color: json['color'],
+        brand: brand,
+        type: type,
+        color: color,
         price: json['price'],
         isbn: json['isbn'],
         img: json['img'],

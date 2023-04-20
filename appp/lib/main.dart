@@ -20,9 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Главная страница',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Book'),
+        title: const Text('Clothes'),
         actions: <Widget>[],
       ),
       body: Center(
@@ -93,8 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           MaterialPageRoute(builder: (_) => LoginPage()));
                     }
                   }),
-              TextButton(
-                child: Text('page'),
+              ElevatedButton(
+                child: Text('Одежда'),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ClothesPage()));
