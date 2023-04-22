@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserRegistrationForm
 from . import models
-from .models import Cloth, Basket, Favorite
+from .models import Cloth, Basket, Favorite, Order, OrderItem
 from django.views.generic import View
 from django.shortcuts import resolve_url
 from django.http import JsonResponse
@@ -14,6 +14,7 @@ from django.utils.decorators import method_decorator
 from .decorators import *
 from rest_framework import generics
 from myapp import models
+from django.db.models import Sum
 from myapp import forms
 from .forms import ClothFilterForm, Order
 from django.contrib.auth.decorators import user_passes_test, login_required
@@ -143,7 +144,7 @@ def get_all_clothes(request):
 
     clothes = filters.ClothFilter(request.GET, queryset=Cloth.objects.all())
 
-    print("FFFFFFFFF: ", clothes.qs)
+    print("FFFFFFFFFaaaaaaa: ", clothes.qs)
     return render(request, 'myapp/sellers/sellerbas.html', {'filter': clothes, 'clothes': clothes.qs})
 
 class ClothDetailView(View):
@@ -234,13 +235,24 @@ def favorite_remove(request, id):
     return redirect("favorite")
 
 
-def order_cloth(request):
-    form = forms.Order()
-    result = ""
+def create_order(request):
+    cart_items = Basket.objects.filter(user=request.user)  # Filter the cart items for the current user
+    cart = Basket(request)
+    if request.method == 'POST':
+        order = Order.objects.create(
+            user=request.user,
+            total_price=cart_items.aggregate(Sum('price'))['price__sum']
+        )
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=item.cloth,  # Use the cloth field of the Basket model to get the product
+                price=item.price,
+                quantity=item.quantity_buying
+            )
+        cart_items.delete()  # Delete the cart items after creating the order
+        return redirect('myapp/cart/order.html', order_id=order.id)
+    return render(request, 'myapp/cart/order.html', {'cart': cart})
 
-    if request.method == "POST":
-        form = forms.Order(request.POST, request.FILES)
-    if form.is_valid():
-            form.save()
-            result = "Заказ успешно оформлен!"
-    return render(request, 'myapp/cart/order.html', {'form': form, 'result': result})
+
+

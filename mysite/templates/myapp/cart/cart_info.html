@@ -61,6 +61,7 @@
             </tbody>
           </table>
         </div>
+       
 
 
         <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
@@ -136,25 +137,25 @@
                 </div>
               </div>
               <div class="col-lg-4 col-xl-3">
-                <div class="d-flex justify-content-between" style="font-weight: 500;">
+                {% comment %} <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-2">Subtotal</p>
                   <p class="mb-2">$</p>
-                </div>
+                </div> {% endcomment %}
 
                 <hr class="my-4">
 
                 <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
                   <p class="mb-2">Total</p>
-                  <p class="mb-2">1</p>
+                  <p class="mb-2">{{ total_price }} тг.</p>
                   
                 </div>
 
-                <button type="button" class="btn btn-primary btn-block btn-lg">
-                  <div class="d-flex justify-content-between">
-                    <span>Checkout</span>
-                    <span>$</span>
-                  </div>
-                </button>
+                <form method="post" action="{% url 'order' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary btn-block btn-lg">Оформить заказ</button>
+                </form>
+
+                
               </div>
             </div>
           </div>

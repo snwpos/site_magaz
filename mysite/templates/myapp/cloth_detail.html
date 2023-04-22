@@ -2,21 +2,50 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between">
-    <h3>{{cloth.name}}</h3>
-    <img class="img-cloth rounded" src="/main{{cloth.image.url}}" alt="">
-    <p class="card-text">{{cloth.brand}}</p>
-    <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;">
-        <a id="" data-cloth="{{cloth_id}}" class="addToCart" href="/main/cart/add/{{cloth.id}}">
-            <i class="fas fa-shopping-cart"></i>
-        </a>
+<div class="row">
+    <div class="col-md-4 col-sm-12 single-right-left">
+        <div class="d-flex justify-content-between">
+            <img class="img-detail-cloth rounded" src="/main{{cloth.image.url}}" alt="">
+        </div>
     </div>
-    <div class="" style="padding: 1.25rem 1.25rem; padding-top: 1.25rem; padding-right: 1.25rem; padding-bottom: 1.25rem; padding-left: 1.25rem;">
-        <a id="" data-cloth="{{cloth_id}}" class="addToFavorite" href="/main/favorite/ad/{{cloth.id}}">
-            <i class="fas fa-heart"></i>
-        </a>
-    </div> 
+    <div class="col-md-8 col-sm-12 single-right-left simpleCart_shelfItem">
+        <h3>{{cloth.name}}</h3>
+        <p><span class="item_price">{{cloth.price}} тг.</span></p>
+        <div class="color-quality">
+            <div class="color-quality-right">
+                <h5>Размер:</h5>
+                <select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
+                    <option value="null">XS</option>
+                    <option value="null">S</option> 
+                    <option value="null">M</option>					
+                    <option value="null">L</option>								
+                </select>
+            </div>
+        </div>      
+        <div class="row">
+            <div class="col-md-6 col-sm-12 rating1 d-flex">
+                <div class="p-3">
+                    <a id="" data-cloth="{{cloth_id}}" class="addToCart" href="/main/cart/add/{{cloth.id}}">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </div>
+                <div class="p-3">
+                    <a id="" data-cloth="{{cloth_id}}" class="addToFavorite" href="/main/favorite/ad/{{cloth.id}}">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                </div> 
+            </div>
+        </div>
+        <div class="description">
+            <h5>Описание:</h5>
+            <p>аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа</p>
+        </div>
+    </div>                
 </div>
+       
+
     <script src="/static/js/main.js"></script>
     <script src="/static/js/favorite.js"></script>
+
+
 {% endblock content %}

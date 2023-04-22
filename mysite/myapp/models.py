@@ -193,16 +193,35 @@ class Pay(models.Model):
     def __str__(self) -> str:
         return self.name
     
-class Buy(models.Model):
+# class Buy(models.Model):
+#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     purchased_clothes = models.ManyToManyField(to=Cloth)
+#     date = models.SmallIntegerField("Дата покупки")
+#     total_price = models.FloatField()
+#     quantity_buying = models.ForeignKey(Basket, on_delete=models.CASCADE)
+#     card = models.ForeignKey(Card, on_delete=models.CASCADE)
+#     pay = models.ForeignKey(Pay, on_delete=models.CASCADE)
+
+class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    purchased_clothes = models.ManyToManyField(to=Cloth)
-    date = models.SmallIntegerField("Дата покупки")
-    total_price = models.FloatField()
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
+
+    def __str__(self) -> str:
+        return f"Order {self.pk} - {self.user.username}"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity_buying = models.ForeignKey(Basket, on_delete=models.CASCADE)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     pay = models.ForeignKey(Pay, on_delete=models.CASCADE)
-
-
 
 
 

@@ -1,36 +1,46 @@
 {% extends 'layout.html' %}
+
 {% block content %}
-    <div class="col-4">
+<div class="container">
+ <div class="row">
+    <div class="col-4" style="border-radius: 15px;">
         <form method="GET">
             {{filter.form.as_p }}
-            <button type="submit" class="btn btn-info btn-outline-success">Применить</button>
+            <button type="submit" class="btn btn-info btn-outline-success border-radius: 15px;">Применить</button>
+
+
         
      
         </form>
     </div>
-    <div class="col-8">
+  </div>
+</div>
+ 
+    
+    <div class="container mt-5">
         <div class="row">
-            {% for cloth in clothes %}
-                <div class="col-12 col-sm-6 col-md-4 my-2">
-                    <div class="card">
-                        <img class="card-img-top img-fluid w-75" src="/main{{cloth.image.url}}" alt="Card image cap">
-                        <div class="card-title">
-                            <h5 class="card-title" style="text-align:center" >
-                                <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
-                            </h5>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">{{cloth.brand}}</li>
-                            <li class="list-group-item">{{cloth.type}}</li>
-                            <li class="list-group-item">{{cloth.price}}</li>
-                        </ul>
-                        {% comment %} <div class="card-body">
-                            <a href="#" class="btn btn-primary card-link">Добавить в корзину</a>
-                            <a href="#" class="btn btn-info card-link">Избранное</a>
-                        </div> {% endcomment %}
-                    </div>
+          {% for cloth in clothes %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+              <div class="product">
+                <div class="image">
+                  <img src="/main{{cloth.image.url}}" alt="" class="img-fluid">
                 </div>
-            {% endfor %}
-        <div>
-    <div>
+                <div class="info">
+                  <h4 class="card-title">
+                    <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
+                  </h4>
+                  <h4 class="card-brand" style="font-size: 14px;">
+                    <a >{{cloth.brand}}</a>
+                  </h4>
+        
+                  <div class="info-price">
+                    <li class="price" >{{cloth.price}}</li>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
 {% endblock content %}

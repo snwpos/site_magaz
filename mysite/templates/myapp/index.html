@@ -95,7 +95,34 @@
        </tbody>
       </table>  {% endcomment %}
 
-<div class="container">
+<div class="container mt-5">
+  <div class="row">
+    {% for cloth in clothes %}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+        <div class="product">
+          <div class="image">
+            <img src="/main{{cloth.image.url}}" alt="" class="img-fluid">
+          </div>
+          <div class="info">
+            <h4 class="card-title">
+              <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
+            </h4>
+            <h4 class="card-brand" style="font-size: 14px;">
+              <a >{{cloth.brand}}</a>
+            </h4>
+  
+            <div class="info-price">
+              <li class="price" id="price{{cloth.id}}">{{cloth.price}}</li>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% comment %} <div class="container">
     <div class="col-lg-9">
       <div class="row">
         {% for cloth in clothes %}
@@ -110,7 +137,7 @@
                 <h4 class="card-title">
                     <a href="/main/{{cloth.url}}">{{cloth.name}}</a>
                 </h4>
-                <h5>{{cinema.city}}</h5>
+                
                 <p class="card-text">{{cloth.brand}}</p>
             </div>
           </div>
@@ -118,7 +145,7 @@
         {% endfor %}
       </div>
     </div>  
-</div>
+</div> {% endcomment %}
 
 
 {% endblock content %}

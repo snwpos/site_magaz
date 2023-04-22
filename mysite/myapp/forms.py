@@ -60,5 +60,10 @@ class Favorite(forms.ModelForm):
 
 class Order(forms.ModelForm):
     class Meta:
-        model = models.Buy
+        model = models.Order
+        fields = '__all__'
+
+class OrderItem(forms.ModelForm):
+    class Meta:
+        model = models.OrderItem
         fields = '__all__'

@@ -3,6 +3,7 @@ body {
     /* background: url(fon1.jpg) center; */
 }
 
+
 .product {
     margin-bottom: 30px;
     background-color: #ffffff;
@@ -63,7 +64,7 @@ body {
     margin-bottom: 5px;
 }
 
-.favorite {
+.addToFavorite {
     border: none;
     width: 40px;
     height: 40px;

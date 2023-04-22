@@ -3,9 +3,9 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<section class="h-100 h-custom">
-    <div class="container h-100 py-5">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+<section class="h-custom">
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center align-items-center">
         <div class="col">
           <div class="table-responsive">
             <table class="table">
@@ -23,7 +23,8 @@
                           <img src="/main{{item.cloth.image.url}}" class="img-fluid rounded-3"
                               style="width: 200px;" alt="Cloth">
                           <div class="flex-column ms-4">
-                              <a class="mb-2" href="/main/{{item.cloth.url}}">{{item.cloth.name}}</a>
+                            <a class="mb-2" style="font-size: 25px;" href="/main/{{item.cloth.url}}">{{item.cloth.name}}</a>
+
                           </div>
                         </div>
                     </th>
