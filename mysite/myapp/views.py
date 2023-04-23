@@ -181,11 +181,10 @@ def basket(request):
 
 @csrf_exempt
 def add_to_basket(request, id):
-    cloth =  Cloth.objects.get(id=id)
+    cloth =  Cloth.objects.get(url=id)
     print(cloth)
     basket = Basket.objects.filter(user=request.user, cloth=cloth)
-    # price = cloth.price
-    price = request.POST.get("price")
+    price = cloth.price
     print("fsdfsefsefsefsefsefsefsefsef", price)
 
     if not basket.exists():
@@ -202,28 +201,27 @@ def basket_remove(request, id):
     basket.delete()
     return redirect('cart_info')
 
-
 def favorite(request):
     items = Favorite.objects.all()
     form = forms.Favorite()
-    return render(request, 'myapp/cart/favorite.html', context={'form': form, 'items': items})
+    return render(request, 'myapp/favorite/fav.html', context={'form': form, 'items': items})
 
 @csrf_exempt
 def add_favorite_cloth(request, id):
-    success = False
+    
     cloth =  Cloth.objects.get(url=id)
     favorite = Favorite.objects.filter(user=request.user, cloth=cloth)
     print("DDDDD: ", favorite)
 
     if not favorite.exists():
         Favorite.objects.create(user = request.user, cloth=cloth)
-        success = True
+        
     else:
         favorite = favorite.first()
         favorite.save()
-        success = True
+        
 
-    return JsonResponse({'success': success})
+    return render(request, 'myapp/favorite/ad.html')
 
 def favorite_remove(request, id):
     favorite = Favorite.objects.get(id=id)

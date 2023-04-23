@@ -4,26 +4,31 @@ $(document).ready(()=>{
         
         var clothID = event.currentTarget.attributes['data-cloth'].value;
         var price = $(`#price${clothID}`).text().replace(',', '.');
-        var url = `/main/cart/add/${clothID}`;
-        var csrftoken = $('input[name="csrfmiddlewaretoken"]').val();
-
+        var url = `http://127.0.0.1:8000/main/cart/add/${clothID}`;
         $.ajax({
             
-            id: clothID,
+            url: url,
             method: `POST`,
             headers: {
-                "X-CSRFToken": csrftoken
+                "x-csrf-token": $("input[name='csrfmiddlewaretoken']").val(),
+                contentType: 'application/json',
+                
             },
             data: {
                 "quantity_buying": 1,
                 "price": price
             },
             success: () => {
-                alert("Товар добавлен")
+                
+                alert("Работает")
             },
             error: () => {
+                
                 alert("Ошибочка")
             }
         })
+
+
+        // alert("");
     });
 })

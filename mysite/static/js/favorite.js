@@ -1,40 +1,33 @@
 $(document).ready(()=>{
-    var selectclothID = 0;
-    $(".addToFav").click((event)=>{
+    $(".addToFavorite").click((event)=>{
         event.preventDefault();
-
-        var url = `/myapp/cart/favorite/add/${selectclothID}`;
+        
+        var clothID = event.currentTarget.attributes['data-cloth'].value;
+        var url = `http://127.0.0.1:8000/main/favorite/ad/${clothID}`;
         $.ajax({
-
+            
             url: url,
             method: `POST`,
             headers: {
                 "x-csrf-token": $("input[name='csrfmiddlewaretoken']").val(),
                 contentType: 'application/json',
-
+                
             },
-            success: (response) => {
-                if (response.success == true) {
-                    $('#addToFavModal').modal('hide');
-                    $('#favSuccessModal').modal('show');
-                }
-                else {
-                    alert('Не добавлена')
-                }
-
+            data: {
+                
+            
+            },
+            success: () => {
+                
+                alert("Работает")
             },
             error: () => {
-
+                
                 alert("Ошибочка")
             }
-        });
+        })
 
-    });
-    
-    $(".favorite").click((event) => {
-        selectclothID = event.currentTarget.attributes['data-cloth'].value
 
-        $('#addToFavModal').modal('show');
-
+        // alert("");
     });
 })

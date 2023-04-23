@@ -9,7 +9,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import CustomLogin, CustomLogout
 from django.conf import settings
-from .api_views import PublisherView
+from .api_views import ClothesList, PublisherView, RegistrationView, TypeList
 
 
 urlpatterns = [
@@ -19,6 +19,10 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
     path('api/publishers', PublisherView.as_view(), name='publisher_api'),
+    path('api/clothes/', ClothesList.as_view()),
+    path('api/registration/', RegistrationView.as_view()),
+    path('api/types/', TypeList.as_view()),
+
 
     path('index', views.index, name='index'),
     path('register/', views.register, name='register'),
@@ -28,9 +32,9 @@ urlpatterns = [
     path('cart/add/<int:id>/', views.add_to_basket, name='add_to_cart'),
     path('cart/remove/<int:id>', views.basket_remove, name='cart_remove'),
     
-    path('cart/favorite/', views.favorite, name='favorite'),
-    path('cart/favorite/add/<int:id>', views.add_favorite_cloth, name='favorite_add' ),
-    path('cart/favorite/remove/<int:id>', views.favorite_remove, name='favorite_remove'),
+    path('favorite/', views.favorite, name='favorite'),
+    path('favorite/add/<int:id>', views.add_favorite_cloth, name='favorite_add' ),
+    path('favorite/remove/<int:id>', views.favorite_remove, name='favorite_remove'),
 
     path('newclothes/', views.add_new_clothes, name='new_cloth'),
     
