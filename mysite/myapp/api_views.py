@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, GenericAPIView
-from .serializers import  PublisherSerializer
+from .serializers import  PublisherSerializer, TypeSerializer
 from rest_framework.generics import ListAPIView
 
 from rest_framework import generics
@@ -34,6 +34,11 @@ from .serializers import ClothSerializer
 class ClothesList(ListAPIView):
     serializer_class = ClothSerializer
     queryset = Cloth.objects.all()
+    print(queryset)
+
+class TypeList(ListAPIView):
+    serializer_class = TypeSerializer
+    queryset = Type.objects.all()
     print(queryset)
 
 class PublisherView(ListAPIView):

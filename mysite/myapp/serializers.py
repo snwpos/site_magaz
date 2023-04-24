@@ -7,12 +7,16 @@ class PublisherSerializer(serializers.ModelSerializer):
         model = models.CustomUser
         fields = 'all'
 
-class ClothSerializer(serializers.ModelSerializer):
-    # cloth = serializers.CharField()
+class TypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Type
+        fields = '__all__'
 
+class ClothSerializer(serializers.ModelSerializer):
+    type = TypeSerializer()
     class Meta:
         model = models.Cloth
-        fields = "__all__"
+        fields = '__all__'
         
 # class ClothListSerializer(serializers.ModelSerializer):
 #     """Список фильмов"""

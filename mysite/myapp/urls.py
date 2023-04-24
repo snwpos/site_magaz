@@ -9,7 +9,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import CustomLogin, CustomLogout
 from django.conf import settings
-from .api_views import PublisherView
+from .api_views import ClothesList, PublisherView, TypeList
 
 
 urlpatterns = [
@@ -17,8 +17,8 @@ urlpatterns = [
     # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), 
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
-    path('api/publishers', PublisherView.as_view(), name='publisher_api'),
+    path('api/types/', TypeList.as_view()),
+    path('api/clothes/', ClothesList.as_view(), name='clothes'),
 
     path('index', views.index, name='index'),
     path('register/', views.register, name='register'),
@@ -50,7 +50,3 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

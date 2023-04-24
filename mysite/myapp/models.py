@@ -156,7 +156,7 @@ class Basket(models.Model):
         verbose_name_plural = "Корзины"
 
     def __str__(self) -> str:
-        return self.name
+        return "Корзина"
     
     def sum(self):
         print("FFFFFFFFF:   ", self.price, self.quantity_buying)
